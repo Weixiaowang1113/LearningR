@@ -1,0 +1,51 @@
+---
+title: "reproducible document"
+author: "Weixiao"
+format: html
+---
+
+## Basic of R
+
+```{r}
+1 + 1
+```
+
+## Setup code chunk
+
+```{r setup}
+library(tidyverse)
+post_meal_data <- read_csv2(
+  here::here("data/post-meal-insulin.csv")
+)
+```
+
+
+##Showing the data
+
+```{r}
+post_meal_data
+
+```
+
+
+```{r}
+glimpse(post_meal_data)
+```
+
+
+
+
+## About me
+
+-weixiao wang
+-the institution of endocrine and metobolic 
+
+I am a first-year PhD student at Kiel University, studying **Internal Medicine**. I am *passionate* about research and eager to learn new skills.
+
+## Simple code
+```{r}
+3 * 3
+```
+
+## Testing for Git
+
