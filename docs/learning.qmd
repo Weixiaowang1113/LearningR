@@ -27,7 +27,24 @@ small_post_meal_data <- select( post_meal_data,id,Age,BMI,Group,auc_pg,auc_ins,g
 ```
 
 
+## About me
+
+-weixiao wang
+-the institution of endocrine and metobolic 
+
+I am a first-year PhD student at Kiel University, studying **Internal Medicine**. I am *passionate* about research and eager to learn new skills.
+
+## Simple code
+```{r}
+3 * 3
+```
+
+
+## Testing for Git
+Today is so cloudy.
 ##Showing the data
+
+
 
 ```{r}
 post_meal_data
@@ -156,20 +173,18 @@ select(post_meal_data,contains("0"))
 
 ```
 
+## renaming the specific columns
 
-
-## About me
-
--weixiao wang
--the institution of endocrine and metobolic 
-
-I am a first-year PhD student at Kiel University, studying **Internal Medicine**. I am *passionate* about research and eager to learn new skills.
-
-## Simple code
 ```{r}
-3 * 3
+
+small_post_meal_data |>
+  rename(auc_glucose = auc_pg)
+
+small_post_meal_data |>
+  rename(auc_glucose = auc_pg,
+         auc_insulin = auc_ins)
 ```
 
 
-## Testing for Git
-Today is so cloudy.
+
+
