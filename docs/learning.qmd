@@ -23,7 +23,15 @@ post_meal_data <- read_csv2(
 )
 
 
-small_post_meal_data <- select( post_meal_data,id,Age,BMI,Group,auc_pg,auc_ins,glykemi)
+small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+
+tidier_post_meal_data <- small_post_meal_data |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) |>
+  filter(glykemi == 0) |>
+  select(-glykemi)
 ```
 
 
@@ -48,7 +56,6 @@ Today is so cloudy.
 
 ```{r}
 post_meal_data
-
 ```
 
 
@@ -58,16 +65,15 @@ glimpse(post_meal_data)
 
 
 ```{r}
-ggplot(post_meal_data,aes(x = BMI))  +
+ggplot(post_meal_data, aes(x = BMI)) +
   geom_histogram()
-
 ```
 
 
 ```{r}
 #| fig-cap: "Distribution of BMI"
 #| label: fig-bmi-histo
-ggplot(post_meal_data,aes(x = BMI))  +
+ggplot(post_meal_data, aes(x = BMI)) +
   geom_histogram()
 ```
 
@@ -81,38 +87,36 @@ ggplot(post_meal_data,aes(x = BMI))  +
 #| label: fig-group-bar
 ggplot(post_meal_data, aes(x = Group)) +
   geom_bar()
-
 ```
 
 @fig-group-bar
 
 
 ```{r}
-post_meal_data |> 
-  ggplot(aes(x = Group,fill = glykemi)) + 
+post_meal_data |>
+  ggplot(aes(x = Group, fill = glykemi)) +
   geom_bar()
 ```
 
 
 
 ```{r}
-post_meal_data |> 
-  ggplot(aes(x = Group,fill = as.character(glykemi)))+ 
+post_meal_data |>
+  ggplot(aes(x = Group, fill = as.character(glykemi))) +
   geom_bar()
 ```
 
 
 ```{r}
-post_meal_data |> 
-  ggplot(aes(x = Group,fill = as.character(glykemi)))+ 
+post_meal_data |>
+  ggplot(aes(x = Group, fill = as.character(glykemi))) +
   geom_bar(position = position_dodge())
 ```
 ## putting two plots side by side
 
 ```{r}
-ggplot(post_meal_data,aes(x = BMI))  +
+ggplot(post_meal_data, aes(x = BMI)) +
   geom_histogram()
-
 ```
 
 ```{r}
@@ -124,12 +128,12 @@ ggplot(post_meal_data, aes(x = glykemi)) +
 ```{r side-by-side-figs}
 #| label: "fig-bmi-glycemi"
 #| fig-cap: "BMI and glycemi,side by side"
-#| fig-subcap: 
+#| fig-subcap:
 #| - "Distribution of BMI"
 #| - "Number of those with glycemia"
 #| layout-ncol: 2
 
-ggplot(post_meal_data,aes(x = BMI))  +
+ggplot(post_meal_data, aes(x = BMI)) +
   geom_histogram()
 
 ggplot(post_meal_data, aes(x = glykemi)) +
@@ -142,10 +146,9 @@ ggplot(post_meal_data, aes(x = glykemi)) +
 ```{r}
 #| fig-cap: "scatterplot showing BMI aganist AUC of bloody glucose"
 #| label: fig-bmi-auc-pg
-ggplot(post_meal_data,aes(x = BMI,y = auc_pg)) +
+ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
   geom_point() +
   geom_smooth()
-
 ```
 
 ## pushing changes to remote
@@ -159,30 +162,28 @@ ggplot(post_meal_data,aes(x = BMI,y = auc_pg)) +
 ```{r}
 select(post_meal_data, Age)
 
-select(post_meal_data, Age,BMI,Weight)
+select(post_meal_data, Age, BMI, Weight)
 
 select(post_meal_data, -Group)
 
-select(post_meal_data,starts_with("PG"))
+select(post_meal_data, starts_with("PG"))
 
-select(post_meal_data,ends_with("DXA"))
+select(post_meal_data, ends_with("DXA"))
 
-select(post_meal_data,contains("0"))
-
-
-
+select(post_meal_data, contains("0"))
 ```
 
 ## renaming the specific columns
 
 ```{r}
-
 small_post_meal_data |>
   rename(auc_glucose = auc_pg)
 
 small_post_meal_data |>
-  rename(auc_glucose = auc_pg,
-         auc_insulin = auc_ins)
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  )
 ```
 
 ## select and rename tasks
@@ -195,10 +196,10 @@ post_meal_data |>
 # Task 2.
 post_meal_data |>
   select(contains(".."), -contains("...")) |>
-rename(
+  rename(
     P.Glucose.minus = P.Glucose..5.OGTT,
     Insulin.minus = Insulin..5.OGTT.X
-  )  
+  )
 
 # Task 3.
 basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age)
@@ -206,4 +207,23 @@ rename(basic_info, Height = Length)
 ```
 
 
+## filtering data by row
+```{r}
+small_post_meal_data |>
+  filter(glykemi == 1)
 
+small_post_meal_data |>
+  filter(BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR")
+```
+
+
+```{r}
+small_post_meal_data |>
+  filter(Group == "CTR", BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR" | BMI >= 25)
+```
