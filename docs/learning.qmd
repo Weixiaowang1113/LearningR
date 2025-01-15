@@ -12,7 +12,11 @@ format: html
 
 ## Setup code chunk
 
+
+
 ```{r setup}
+#| message :false
+#| warning :false
 library(tidyverse)
 post_meal_data <- read_csv2(
   here::here("data/post-meal-insulin.csv")
@@ -49,4 +53,4 @@ I am a first-year PhD student at Kiel University, studying **Internal Medicine**
 
 
 ## Testing for Git
-
+Today is so cloudy.
