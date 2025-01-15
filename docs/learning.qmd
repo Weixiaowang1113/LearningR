@@ -57,7 +57,7 @@ ggplot(post_meal_data,aes(x = BMI))  +
 ## Exercise: discrete plots
 
 ```{r}
-#| fig-cap: "Distrubution of group"
+#| fig-cap: "Discrete of group"
 #| label: fig-group-bar
 ggplot(post_meal_data, aes(x = Group)) +
   geom_bar()
@@ -65,6 +65,70 @@ ggplot(post_meal_data, aes(x = Group)) +
 ```
 
 @fig-group-bar
+
+
+```{r}
+post_meal_data |> 
+  ggplot(aes(x = Group,fill = glykemi)) + 
+  geom_bar()
+```
+
+
+
+```{r}
+post_meal_data |> 
+  ggplot(aes(x = Group,fill = as.character(glykemi)))+ 
+  geom_bar()
+```
+
+
+```{r}
+post_meal_data |> 
+  ggplot(aes(x = Group,fill = as.character(glykemi)))+ 
+  geom_bar(position = position_dodge())
+```
+## putting two plots side by side
+
+```{r}
+ggplot(post_meal_data,aes(x = BMI))  +
+  geom_histogram()
+
+```
+
+```{r}
+ggplot(post_meal_data, aes(x = glykemi)) +
+  geom_bar()
+```
+
+
+```{r side-by-side-figs}
+#| label: "fig-bmi-glycemi"
+#| fig-cap: "BMI and glycemi,side by side"
+#| fig-subcap: 
+#| - "Distribution of BMI"
+#| - "Number of those with glycemia"
+#| layout-ncol: 2
+
+ggplot(post_meal_data,aes(x = BMI))  +
+  geom_histogram()
+
+ggplot(post_meal_data, aes(x = glykemi)) +
+  geom_bar()
+```
+
+
+## Plotting two continuous variables
+
+```{r}
+#| fig-cap: "scatterplot showing BMI aganist AUC of bloody glucose"
+#| label: fig-bmi-auc-pg
+ggplot(post_meal_data,aes(x = BMI,y = auc_pg)) +
+  geom_point() +
+  geom_smooth()
+
+```
+
+
 
 
 
