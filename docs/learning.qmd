@@ -15,8 +15,8 @@ format: html
 
 
 ```{r setup}
-#| message :false
-#| warning :false
+#| message: false
+#| warning: false
 library(tidyverse)
 post_meal_data <- read_csv2(
   here::here("data/post-meal-insulin.csv")
@@ -346,6 +346,8 @@ post_meal_data |>
 ## Calculating summary statistics
 
 ```{r}
+#| label: tbl-mean-age-bmi
+#| tbl-cap: "Mean values of age and BMi for each group"
 tidied_post_meal_data |>
   summarise(
     max_bmi = max(BMI),
@@ -359,8 +361,11 @@ tidied_post_meal_data |>
 tidied_post_meal_data |>
   group_by(Group) |>
   summarise(
-    mean_age = mean(Age),
-    mean_bmi = mean(BMI)
+    "Mean Age (yrs)" = round(mean(Age), 1),
+    "Mean BMI (kg/m^2)" = round(mean(BMI), 1)
   ) |>
-  ungroup()
+  ungroup() |>
+  knitr::kable()
 ```
+
+See @tbl-mean-age-bmi
